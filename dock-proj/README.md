@@ -91,26 +91,28 @@ sudo usermod -aG odoo $USER
 
 Check the permissions of the `extra-addons` directory locally and inside the Docker container:
 
-### Local Directory
-
-```sh
-mkdir extra-addons/app1 # Now should work without permission error
-ls -l extra-addons
-# Sample output
-❯ ls -l extra-addons                   
-total 4
-drwxrwxr-x 2 abdi odoo 4096 Jul  1 12:14 app1
-```
-
 ### Docker Container Directory
 
 ```sh
+# Create new app `app1'
+docker exec -it odoo_app odoo scafold app1 /mnt/extra-addons
+
 docker exec -it odoo_app ls -l /mnt/extra-addons
 # Sample output
  ❯ docker exec -it odoo_app ls -l /mnt/extra-addons
 total 4
 drwxrwxr-x 2 1000 1001 4096 Jul  1 09:14 app1
+```
 
+### Local Directory
+
+```sh
+mkdir extra-addons/app2 # Now should work from local too without permission error
+ls -l extra-addons
+# Sample output
+❯ ls -l extra-addons                   
+total 4
+drwxrwxr-x 2 abdi odoo 4096 Jul  1 12:14 app1
 ```
 
 ## 5. Access the Docker Containers
