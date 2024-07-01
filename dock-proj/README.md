@@ -78,6 +78,7 @@ Change the ownership of the `extra-addons` directory on your local machine:
 ```sh
 sudo chown -R $USER:odoo extra-addons
 sudo chmod -R 775 extra-addons
+sudo chmod g+s extra-addons # Sets the setgid bit on the extra-addons directory.
 ```
 
 If you encounter an error, ensure you have the `odoo` group:
@@ -96,23 +97,23 @@ Check the permissions of the `extra-addons` directory locally and inside the Doc
 ```sh
 # Create new app `app1'
 docker exec -it odoo_app odoo scaffold app1 /mnt/extra-addons
-
-docker exec -it odoo_app ls -l /mnt/extra-addons
 # Sample output
- ❯ docker exec -it odoo_app ls -l /mnt/extra-addons
+❯ docker exec -it odoo_app ls -l /mnt/extra-addons
 total 4
-drwxrwxr-x 2 1000 1001 4096 Jul  1 09:14 app1
+drwxr-xr-x 7 1000 1001 4096 Jul  1 16:23 app1
+
 ```
 
 ### Local Directory
 
 ```sh
 mkdir extra-addons/app2 # Now should work from local too without permission error
-ls -l extra-addons
 # Sample output
-❯ ls -l extra-addons                   
-total 4
-drwxrwxr-x 2 abdi odoo 4096 Jul  1 12:14 app1
+❯ ls -l extra-addons
+total 8
+drwxrwxr-x 7 abdi odoo 4096 Jul  1 19:23 app1
+drwxrwsr-x 2 abdi odoo 4096 Jul  1 19:41 app2
+
 ```
 
 ## 5. Access the Docker Containers
