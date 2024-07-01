@@ -70,7 +70,7 @@ To allow both local and Docker editing of the `extra-addons` directory, adjust i
 Change the ownership of the `extra-addons` directory inside the Docker container:
 
 ```sh
-docker exec -it -u root odoo chown -R odoo:odoo /mnt/extra-addons
+docker exec -it -u root odoo_app chown -R odoo:odoo /mnt/extra-addons
 ```
 
 Change the ownership of the `extra-addons` directory on your local machine:
