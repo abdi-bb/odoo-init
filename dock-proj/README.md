@@ -3,8 +3,8 @@
 ## 0. Begin
 
 ```sh
-mkdir smpl-cust
-cd smpl-cust
+mkdir proj-dir
+cd proj-dir
 ```
 
 ## 1. Write the `docker-compose.yaml` file
@@ -67,8 +67,8 @@ docker-compose up --build --remove-orphans
 To allow both local and Docker editing of the `extra-addons` directory, adjust its ownership and permissions:
 
 ```sh
-sudo chown -R $USER:odoo ~/projects/odoo/odoo15/smpl-cust/extra-addons
-sudo chmod -R 775 ~/projects/odoo/odoo15/smpl-cust/extra-addons
+sudo chown -R $USER:odoo proj-dir/extra-addons
+sudo chmod -R 775 proj-dir/extra-addons
 ```
 
 If you encounter an error, ensure you have the `odoo` group:
@@ -91,7 +91,7 @@ Check the permissions of the `extra-addons` directory locally and inside the Doc
 ### Local Directory
 
 ```sh
-ls -l ~/projects/odoo/odoo15/smpl-cust/extra-addons
+ls -l proj-dir/extra-addons
 ```
 
 ### Docker Container Directory
