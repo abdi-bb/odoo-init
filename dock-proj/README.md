@@ -60,6 +60,7 @@ Build and start the containers with the following command:
 
 ```sh
 docker-compose up --build --remove-orphans
+# Because of the mount inside docker compose file this command will create `extra-addons` dir inside `proj-dir`
 ```
 
 ## 3. Adjust the Ownership of `extra-addons` Directory
