@@ -63,21 +63,7 @@ docker-compose up --build --remove-orphans
 # Because of the mount inside docker compose file this command will create `extra-addons` dir inside `proj-dir`
 ```
 
-## 3. Adjust the Ownership of `extra-addons` Directory(The step matters: First do inside docker container)
-
-To allow both local and Docker editing of the `extra-addons` directory, adjust its ownership and permissions:
-
-Since we can't manage permissions of empty dir, let's create our first app using root user of the container:
-
-```sh
-docker exec -it -u root odoo_app odoo scaffold app1 /mnt/extra-addons
-```
-
-Change the ownership of the `extra-addons` directory inside the Docker container:
-
-```sh
-docker exec -it -u root odoo_app chown -R odoo:odoo /mnt/extra-addons
-```
+## 3. Adjust the Ownership of `extra-addons` Directory
 
 Change the ownership of the `extra-addons` directory on your local machine:
 
@@ -102,7 +88,7 @@ Check the permissions of the `extra-addons` directory locally and inside the Doc
 
 ```sh
 # Create new app `app1'
-docker exec -it odoo_app odoo scaffold app2 /mnt/extra-addons
+docker exec -it -u root odoo_app odoo scaffold app1 /mnt/extra-addons
 # Sample output
 ❯ docker exec -it odoo_app ls -l /mnt/extra-addons
 total 4
