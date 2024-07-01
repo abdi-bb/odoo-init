@@ -1,0 +1,40 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres:13
+    container_name: postgres_db
+    restart: always
+    ports:
+      - "5444:5432"
+    environment:
+      # Create db superuser inside `postgres` db
+      - POSTGRES_USER=test_usr
+      - POSTGRES_PASSWORD=test_pwd
+      - POSTGRES_DB=postgres
+    # env_file: .env
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  odoo:
+    image: odoo:15.0
+    container_name: odoo_app
+    ports:
+      - "8069:8069"
+    environment:
+      # Connect to db, using the above created user
+      - HOST=db
+      - PORT=5432
+      - USER=test_usr
+      - PASSWORD=test_pwd
+    # env_file: .env
+    volumes:
+      - web-data:/var/lib/odoo
+      - ./extra-addons:/mnt/extra-addons
+    depends_on:
+      - db
+    command: ["-i", "base", "-d", "test_db"]
+
+volumes:
+  db-data:
+  web-data:
