@@ -130,3 +130,9 @@ Once your container is up and running, you can open a bash shell inside the cont
 docker exec -it odoo_app bash
 docker exec -it postgres_db bash
 ```
+
+## Incase you run into problem, you can have fresh start
+
+```sh
+docker-compose down -v
+```
