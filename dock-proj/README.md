@@ -68,8 +68,8 @@ docker-compose up --build --remove-orphans
 To allow both local and Docker editing of the `extra-addons` directory, adjust its ownership and permissions:
 
 ```sh
-sudo chown -R $USER:odoo proj-dir/extra-addons
-sudo chmod -R 775 proj-dir/extra-addons
+sudo chown -R $USER:odoo extra-addons
+sudo chmod -R 775 extra-addons
 ```
 
 If you encounter an error, ensure you have the `odoo` group:
@@ -92,7 +92,7 @@ Check the permissions of the `extra-addons` directory locally and inside the Doc
 ### Local Directory
 
 ```sh
-ls -l proj-dir/extra-addons
+ls -l extra-addons
 ```
 
 ### Docker Container Directory
