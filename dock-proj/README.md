@@ -113,10 +113,11 @@ drwxrwxr-x 2 1000 1001 4096 Jul  1 09:14 app1
 
 ```
 
-## 5. Access the Docker Container
+## 5. Access the Docker Containers
 
 Once your container is up and running, you can open a bash shell inside the container using:
 
 ```sh
 docker exec -it odoo bash
+docker exec -it db bash
 ```
