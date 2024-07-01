@@ -105,7 +105,7 @@ drwxrwxr-x 2 abdi odoo 4096 Jul  1 12:14 app1
 ### Docker Container Directory
 
 ```sh
-docker exec -it odoo ls -l /mnt/extra-addons
+docker exec -it odoo_app ls -l /mnt/extra-addons
 # Sample output
  ❯ docker exec -it odoo_app ls -l /mnt/extra-addons
 total 4
@@ -118,6 +118,6 @@ drwxrwxr-x 2 1000 1001 4096 Jul  1 09:14 app1
 Once your container is up and running, you can open a bash shell inside the container using:
 
 ```sh
-docker exec -it odoo bash
-docker exec -it db bash
+docker exec -it odoo_app bash
+docker exec -it postgres_db bash
 ```
