@@ -95,7 +95,7 @@ Check the permissions of the `extra-addons` directory locally and inside the Doc
 
 ```sh
 # Create new app `app1'
-docker exec -it odoo_app odoo scafold app1 /mnt/extra-addons
+docker exec -it odoo_app odoo scaffold app1 /mnt/extra-addons
 
 docker exec -it odoo_app ls -l /mnt/extra-addons
 # Sample output
