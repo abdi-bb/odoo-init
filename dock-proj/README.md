@@ -131,24 +131,35 @@ make local-chown
 
 mkdir extra-addons/app1 # Now should work from local too without permission error
 # Sample output
-❯ ls -l extra-addons
-total 8
-drwxrwxr-x 7 abdi abdi 4096 Jul  1 19:23 app1
+ ❯ ls -l extra-addons
+total 4
+drwxrwxr-x 2 abdi abdi 4096 Jul  2 15:38 app1
 ```
 
 ### Docker Container Directory
-
+❯
 ```sh
 make docker-chown
+```
 
-docker exec -it odoo_app bash
+ ❯ 
+ ```sh
+ docker exec -it odoo_app bash
+ ```
 
+odoo@095c64b416fa:/$
+```sh
 odoo scaffold app2 /mnt/extra-addons
+```
 
-❯ ls -l /mnt/extra-addons
-total 4
-drwxr-xr-x 7 odoo odoo 4096 Jul  1 16:23 app1
-drwxr-xr-x 7 odoo odoo 4096 Jul  1 16:23 app2
+odoo@095c64b416fa:/$
+```sh
+ls -l /mnt/extra-addons
+```
+```sh
+total 8
+drwxrwxr-x 2 odoo odoo 4096 Jul  2 12:38 app1
+drwxr-xr-x 7 odoo odoo 4096 Jul  2 12:41 app2
 ```
 
 ### Alternatively, you can use privileged permissions each time you run the commands
