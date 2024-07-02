@@ -128,7 +128,7 @@ mkdir extra-addons/app1 # Now should work from local too without permission erro
 # Sample output
 ❯ ls -l extra-addons
 total 4
-drwxrwxr-x 2 user user 4096 Jul  2 15:38 app1
+drwxrwxr-x 2 abdi abdi 4096 Jul  2 17:06 app1
 ```
 
 **Docker Container Directory**
@@ -150,8 +150,8 @@ odoo@container:/$ odoo scaffold app2 /mnt/extra-addons
 odoo@container:/$ ls -l /mnt/extra-addons
 # Sample output
 total 8
-drwxrwxr-x 2 odoo odoo 4096 Jul  2 12:38 app1
-drwxr-xr-x 7 odoo odoo 4096 Jul  2 12:41 app2
+drwxrwxr-x 2 odoo odoo 4096 Jul  2 14:06 app1
+drwxr-xr-x 7 odoo odoo 4096 Jul  2 14:09 app2
 ```
 
 **Alternatively, use privileged permissions each time you run the commands:**
