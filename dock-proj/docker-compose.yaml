@@ -15,10 +15,17 @@ services:
     # env_file: .env
     volumes:
       - db-data:/var/lib/postgresql/data
+    # Wait for db to be ready before starting the app
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test_usr -d postgres -h localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   odoo:
     image: odoo:15.0
     container_name: odoo_app
+    restart: always # Incase the db is not ready and crashes when the app try to connect
     ports:
       - "8069:8069"
     environment:
