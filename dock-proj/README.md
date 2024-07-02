@@ -148,7 +148,7 @@ odoo scaffold app2 /mnt/extra-addons
 ❯ ls -l /mnt/extra-addons
 total 4
 drwxr-xr-x 7 1000 1001 4096 Jul  1 16:23 app1
-
+drwxr-xr-x 7 1000 1001 4096 Jul  1 16:23 app2
 ```
 
 
