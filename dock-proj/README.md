@@ -147,10 +147,23 @@ odoo scaffold app2 /mnt/extra-addons
 
 ❯ ls -l /mnt/extra-addons
 total 4
-drwxr-xr-x 7 1000 1001 4096 Jul  1 16:23 app1
-drwxr-xr-x 7 1000 1001 4096 Jul  1 16:23 app2
+drwxr-xr-x 7 odoo odoo 4096 Jul  1 16:23 app1
+drwxr-xr-x 7 odoo odoo 4096 Jul  1 16:23 app2
 ```
 
+### Alternatively, you can use privileged permissions each time you run the commands
+
+Locally:
+
+```sh
+sudo mkdir extra-addons/app1
+```
+
+Inside Container:
+
+```sh
+docker exec -it -u root odoo_app odoo scaffold app2 /mnt/extra-addons
+```
 
 ## 5. Access the Docker Containers
 
