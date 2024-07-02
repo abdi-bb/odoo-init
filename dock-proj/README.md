@@ -29,10 +29,17 @@ services:
     # env_file: .env
     volumes:
       - db-data:/var/lib/postgresql/data
+    # Wait for db to be ready before starting the app
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test_usr -d postgres -h localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   odoo:
     image: odoo:15.0
     container_name: odoo_app
+    restart: always # Incase the db is not ready and crashes when the app try to connect
     ports:
       - "8069:8069"
     environment:
@@ -63,30 +70,50 @@ docker-compose up --build --remove-orphans
 # Because of the mount inside docker compose file this command will create `extra-addons` dir inside `proj-dir`
 ```
 
-## 3. Adjust the Ownership of `extra-addons` Directory(The step matters: First do inside docker container)
+## 3. Adjust the Ownership of `extra-addons` Directory
 
-To allow both local and Docker editing of the `extra-addons` directory, adjust its ownership and permissions:
+create `Makefile` with the following content:
 
-Since we can't manage permissions of empty dir, let's create our first app using root user of the container:
+```makefile
+# Makefile for managing ownership in local and Docker environments
 
-```sh
+# Variables
+LOCAL_USER := $(shell id -u):$(shell id -g)
+DOCKER_EXEC := docker exec -it -u root odoo_app
+
+# Targets
+local-chown:
+	sudo chown -R $(LOCAL_USER) extra-addons
+
+docker-chown:
+	$(DOCKER_EXEC) chown -R odoo:odoo /mnt/extra-addons
+
+# Default target
+.DEFAULT_GOAL := help
+
+# Help target
+help:
+	@echo "Usage: make <target>"
+	@echo ""
+	@echo "Targets:"
+	@echo "  local-chown    : Change ownership of 'extra-addons' locally"
+	@echo "  docker-chown   : Change ownership of '/mnt/extra-addons' inside Docker container"
+	@echo "  help           : Show this help message"
 ```
 
-Change the ownership of the `extra-addons` directory inside the Docker container:
+To work locally, run:
 
 ```sh
-docker exec -it -u root odoo_app chown -R odoo:odoo /mnt/extra-addons
+make local-chown
 ```
 
-Change the ownership of the `extra-addons` directory on your local machine:
+To work inside container, run:
 
 ```sh
-sudo chown -R $USER:odoo extra-addons
-sudo chmod -R 775 extra-addons
-sudo chmod g+s extra-addons # Sets the setgid bit on the extra-addons directory.(future files)
+make docker-chown
 ```
 
-If you encounter an error, ensure you have the `odoo` group:
+Incase you face error not having group odoo, run:
 
 ```sh
 sudo groupadd odoo
@@ -97,29 +124,33 @@ sudo usermod -aG odoo $USER
 
 Check the permissions of the `extra-addons` directory locally and inside the Docker container:
 
+### Local Directory
+
+```sh
+make local-chown
+
+mkdir extra-addons/app1 # Now should work from local too without permission error
+# Sample output
+❯ ls -l extra-addons
+total 8
+drwxrwxr-x 7 abdi abdi 4096 Jul  1 19:23 app1
+```
+
 ### Docker Container Directory
 
 ```sh
-# Create new app `app1'
-docker exec -it -u root odoo_app odoo scaffold app1 /mnt/extra-addons
-# Sample output
-❯ docker exec -it odoo_app ls -l /mnt/extra-addons
+make docker-chown
+
+docker exec -it odoo_app bash
+
+odoo scaffold app2 /mnt/extra-addons
+
+❯ ls -l /mnt/extra-addons
 total 4
 drwxr-xr-x 7 1000 1001 4096 Jul  1 16:23 app1
 
 ```
 
-### Local Directory
-
-```sh
-mkdir extra-addons/app2 # Now should work from local too without permission error
-# Sample output
-❯ ls -l extra-addons
-total 8
-drwxrwxr-x 7 abdi odoo 4096 Jul  1 19:23 app1
-drwxrwsr-x 2 abdi odoo 4096 Jul  1 19:41 app2
-
-```
 
 ## 5. Access the Docker Containers
 
