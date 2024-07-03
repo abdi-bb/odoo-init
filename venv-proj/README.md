@@ -237,11 +237,9 @@ odoo -c ~/work15/library.conf -u library_app --test-enable
 
 ### 4. Implement the Model Layer
 
-Create the model file:
+Create the model file `~/work15/library/library_app/models/library_book.py`
 
 ```sh
-cat ~/work15/library/library_app/models/library_book.py
-
 from odoo import fields, models
 
 class Book(models.Model):
