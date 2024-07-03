@@ -27,8 +27,7 @@ sudo apt install postgresql # Installs PostgreSQL
     sudo su -c "createuser -s $USER" postgres # Creates db superuser
     ```
 
-    It's good idea to create our dedicated db user as a super user to be able to create and drop databases that are used by Odoo
-instances
+    It's good idea to create our dedicated db user as a super user to be able to create and drop databases that are used by Odoo instances
 
    ```sh
     sudo su -c "createuser -s library_db_usr" postgres # Create db superuser using your targeted db user
@@ -38,16 +37,15 @@ instances
 
     Using postgres system user
    
-   ```sh
+  ```sh
   sudo -u postgres psql -c "ALTER USER library_db_usr WITH PASSWORD 'library_db_pwd'"
-   ```
+  ```
 
-   or alternatively using current system user
+   Or Using current system user
 
    ```sh
   sudo -u $USER psql -c "ALTER USER library_db_usr WITH PASSWORD 'library_db_pwd'" -d postgres
    ```
-
 
 ---
 
