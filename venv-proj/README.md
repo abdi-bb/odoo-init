@@ -176,7 +176,7 @@ http_port = 8069
 addons_path = /home/abdi/work15/library,/home/abdi/work15/odoo/addons,/home/abdi/work15/odoo/odoo/addons
 ```
 
-Or use one of the folllowing commands(Not this will add all the config params to the file)
+Or use the folllowing command(Note this will add the full config params to the file)
 
 ```sh
 odoo -c library.conf --addons-path="./library,./odoo/addons,./odoo/odoo/addons" --save --stop
