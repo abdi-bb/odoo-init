@@ -21,30 +21,7 @@ sudo apt install postgresql # Installs PostgreSQL
     sudo service postgresql start
     ```
 
-2. **Create PostgreSQL User and Database**:
-
-    Access the PostgreSQL prompt and create the user and database:
-
-    ```sh
-    sudo -u postgres psql
-    ```
-
-    Inside the PostgreSQL prompt, run:
-
-    ```sql
-    CREATE USER library_db_usr WITH PASSWORD 'library_db_pwd';
-    CREATE DATABASE library OWNER library_db_usr;
-    GRANT ALL PRIVILEGES ON DATABASE library TO library_db_usr;
-    \q
-    ```
-
-    Or Just create the db and let the config file do the whole staff
-
-   ```sh
-   createdb library
-   ```
-
-4. **Create a PostgreSQL User for the Current System User**:
+2. **Create a PostgreSQL User for the Current System User**:
 
     ```sh
     sudo su -c "createuser -s $USER" postgres # Creates db superuser
@@ -62,14 +39,13 @@ instances
     Using postgres system user
    
    ```sh
-   sudo su postgres
-   psql -U postgres -c "ALTER USER library_db_usr WITH PASSWORD 'library_db_pwd'"
+  sudo -u postgres psql -c "ALTER USER library_db_usr WITH PASSWORD 'library_db_pwd'"
    ```
 
    or alternatively using current system user
 
    ```sh
-   psql -U $USER -c "ALTER USER library_db_usr WITH PASSWORD 'library_db_pwd'" -d postgres
+  sudo -u $USER psql -c "ALTER USER library_db_usr WITH PASSWORD 'library_db_pwd'" -d postgres
    ```
 
 
@@ -107,7 +83,7 @@ source ~/work15/env15/bin/activate
 
 ```sh
 git clone https://github.com/odoo/odoo.git -b 15.0 \
---depth=1 # Get Odoo sources
+--depth=1 # Get Odoo sources Or Download the zipped file and extract
 ```
 
 **Install Required Python Packages and Odoo Itself**
@@ -136,6 +112,7 @@ Edit the config file to look like this:
 ```ini
 [options]
 ; This is the password that allows database operations:
+; admin_passwd = admin
 admin_passwd = master
 db_host = localhost
 db_name = library
@@ -153,7 +130,10 @@ OR
 ```sh
 odoo --save --stop-after-init # Creates ~/.odoorc config file
 odoo -c ~/work15/library.conf --save --stop #To create our own full custom config
-odoo -c ~/work15/library.conf #To run the odoo server using our custom config
+```
+
+```sh
+odoo -c ~/work15/library.conf -i base # To run the odoo server using our custom config and to
 ```
 
 
