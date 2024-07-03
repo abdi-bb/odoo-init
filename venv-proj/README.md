@@ -255,6 +255,15 @@ class Book(models.Model):
     author_ids = fields.Many2many("res.partner", string="Authors")
 ```
 
+Don't forget to import this module inside `~/work15/library/library_app/models/__init__.py`
+
+```sh
+# -*- coding: utf-8 -*-
+
+from . import models
+from . import library_book
+```
+
 ### 5. Set Up Security Groups and Access Controls
 
 #### Create Security Groups and Rules
