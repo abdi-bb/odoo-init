@@ -159,29 +159,32 @@ odoo scaffold library_app ~/work15/library
 
 Add your custom addons and Odoo's addons to the config file:
 
-edit the library.conf to include this line at the end
+edit the `library.conf` to include this line at the end
 
-```sh
+```ini
+[options]
+; This is the password that allows database operations:
+; admin_passwd = admin
+admin_passwd = master
+db_host = localhost
+db_name = library
+db_port = 5432
+db_user = library_db_usr
+db_password = library_db_pwd
+http_port = 8069
+;addons_path = /usr/lib/python3/dist-packages/odoo/addons
 addons_path = /home/abdi/work15/library,/home/abdi/work15/odoo/addons,/home/abdi/work15/odoo/odoo/addons
 ```
 
 Or use one of the folllowing commands(Not this will add all the config params to the file)
 
 ```sh
-odoo -c library.conf --addons-path="./library,./odoo/addons,./odoo/odoo/addons"
-```
-
-Or:
-
-```sh
-odoo --addons-path="~/work15/library,~/work15/odoo/addons,~/work15/odoo/odoo/addons" ~/work15/library.conf --save --stop
+odoo -c library.conf --addons-path="./library,./odoo/addons,./odoo/odoo/addons" --save --stop
 ```
 
 Edit the `__manifest__.py` file with your own information: Like this eg.
 
 ```sh
-cat ~/work15/library/library_app/__manifest__.py
-
 {
     "name": "Library Management",
     "summary": "Manage library catalog and book lending.",
@@ -227,7 +230,7 @@ odoo -c ~/work15/library.conf -u library_app --dev=all
 
 ### 3. Adding Automated Tests (To Follow TDD)
 
-Once you write tests, you can run them:
+Once you write tests, you can run them using:
 
 ```sh
 odoo -c ~/work15/library.conf -u library_app --test-enable
