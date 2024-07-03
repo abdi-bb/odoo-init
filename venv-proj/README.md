@@ -205,9 +205,8 @@ Although you haven't completed your app, you can install it to see it listed cor
 Before installing, it's convenient to add your app icon
 
 ```sh
-cd ~/work15/library/library_app
-mkdir -p ./static/description
-cp ~/work15/odoo/addons/note/static/description/icon.png ./static/description/
+mkdir -p ~/work15/library/library_app/static/description
+cp ~/work15/odoo/addons/note/static/description/icon.png ~/work15/library/library_app/static/description/
 ```
 
 ```sh
