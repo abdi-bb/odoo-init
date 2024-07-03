@@ -177,7 +177,7 @@ docker exec -it odoo_app bash
 docker exec -it postgres_db bash
 ```
 
-#### In Case You Run Into Problems, You Can Have a Fresh Start
+#### In Case You Run Into Problems, You Can Have a Fresh Start(Remove container, network and volume)
 
 ```sh
 docker-compose down -v
