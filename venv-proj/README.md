@@ -478,7 +478,7 @@ Create `~/work15/library/library_app/views/book_list_template.xml`:
 </odoo>
 ```
 
-#### Don't forget updating the manifest file each time you add new xml/csv file
+#### Don't forget updating the `__manifest__.py` file each time you add new xml/csv file
 
 ```sh
 "data": [
