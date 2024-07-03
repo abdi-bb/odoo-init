@@ -131,7 +131,7 @@ odoo -c ~/work15/library.conf --save --stop #To create our own full custom confi
 ```
 
 ```sh
-odoo -c ~/work15/library.conf -i base # To run the odoo server using our custom config and to
+odoo -c ~/work15/library.conf -i base # To run the odoo server using our custom config and initialize the db
 ```
 
 
