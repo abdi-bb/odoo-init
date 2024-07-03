@@ -99,13 +99,13 @@ help:
 To work locally, run:
 
 ```sh
-make local-chown
+make local-chown # sudo chown -R 1000:1000 extra-addons
 ```
 
 To work inside the container, run:
 
 ```sh
-make docker-chown
+make docker-chown # docker exec -it -u root odoo_app chown -R odoo:odoo /mnt/extra-addons
 ```
 
 In case you face an error not having the `odoo` group, run:
