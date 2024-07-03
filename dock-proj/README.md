@@ -9,7 +9,7 @@ cd proj-dir
 
 #### 1. Write the `docker-compose.yaml` file
 
-Create a file named [docker-compose.yaml](docker-compose.yaml) and add the following content:
+Create a [docker-compose.yaml](docker-compose.yaml) with the following content:
 
 ```yaml
 version: '3.1'
@@ -67,7 +67,7 @@ docker-compose up --build --remove-orphans
 
 #### 3. Adjust the Ownership of `extra-addons` Directory
 
-Create a `Makefile` with the following content:
+Create a [Makefile](Makefile) with the following content:
 
 ```makefile
 # Makefile for managing ownership in local and Docker environments
