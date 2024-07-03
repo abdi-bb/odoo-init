@@ -9,7 +9,7 @@ cd proj-dir
 
 #### 1. Write the `docker-compose.yaml` file
 
-Create a file named `docker-compose.yaml` and add the following content:
+Create a file named `[docker-compose.yaml](docker-compose.yaml)` and add the following content:
 
 ```yaml
 version: '3.1'
