@@ -295,7 +295,7 @@ Create `~/work15/library/library_app/security/library_security.xml`:
 </odoo>
 ```
 
-#### Create Access Controls For the security groups inside `ir.model.access.csv` (Tell the created security groups what to do and on which models.... name,model,group(it self),perm_)
+#### Giving Access to the security groups inside `ir.model.access.csv` (Tell the created security groups what to do and on which model.... name,model,group(it self),perm_)
 
 Create `~/work15/library/library_app/security/ir.model.access.csv`:
 
