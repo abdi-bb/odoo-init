@@ -264,7 +264,7 @@ from . import library_book
 
 ### 5. Set Up Security Groups and Access Controls
 
-#### Create Security Groups and Rules
+#### Create Security Groups(User and Manager using name,category_id, implied_ids and/users) and Rules(name,model,domain,groups)
 
 Create `~/work15/library/library_app/security/library_security.xml`:
 
@@ -295,7 +295,7 @@ Create `~/work15/library/library_app/security/library_security.xml`:
 </odoo>
 ```
 
-#### Create Access Controls For the security groups inside `ir.model.access.csv`
+#### Create Access Controls For the security groups inside `ir.model.access.csv` (Tell the created security groups what to do and on which models.... name,model,group(it self),perm_)
 
 Create `~/work15/library/library_app/security/ir.model.access.csv`:
 
@@ -305,7 +305,7 @@ access_book_user,BookUser,model_library_book,library_group_user,1,1,1,0
 access_book_manager,BookManager,model_library_book,library_group_manager,1,1,1,1
 ```
 
-#### Assign Users to Security Groups
+#### Assign Users to Security Groups?
 
 ...
 
