@@ -264,7 +264,7 @@ from . import library_book
 
 ### 5. Set Up Security Groups and Access Controls
 
-#### Create Security Groups(User and Manager using name,category_id, implied_ids and/users) and Rules(name,model,domain,groups)
+#### Create Security Groups(User and Manager using name,category_id, implied_ids and/users) and Rules(name,model,domain,groups=====Rules are used to tell security groups which record of a model to access.... While giving access to security groups(see the next step before dealing with row-level rules) tells security groups which model to access)
 
 Create `~/work15/library/library_app/security/library_security.xml`:
 
