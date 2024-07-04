@@ -295,7 +295,7 @@ Create `~/work15/library/library_app/security/library_security.xml`:
 </odoo>
 ```
 
-#### Giving Access to the security groups inside `ir.model.access.csv` (Tell the created security groups what to do and on which model.... name,model,group(it self),perm_)
+#### Giving Access to the security groups inside `ir.model.access.csv` (Tell the created security groups what to do and on which model.... name,model,group(it self),perm_)=Creating Access Controls
 
 Create `~/work15/library/library_app/security/ir.model.access.csv`:
 
@@ -306,6 +306,7 @@ access_book_manager,BookManager,model_library_book,library_group_manager,1,1,1,1
 ```
 
 #### Assign Users to Security Groups?
+    - Adding `users` field to the security group
 
 ...
 
