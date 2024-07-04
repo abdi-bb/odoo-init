@@ -447,6 +447,7 @@ class Book(models.Model):
 ##### Create Controller for Routing
 
 Create `~/work15/library/library_app/controllers/main.py`:
+Import `from . import main` to `~/work15/library/library_app/controllers/__init__.py`
 
 ```python
 from odoo import http
