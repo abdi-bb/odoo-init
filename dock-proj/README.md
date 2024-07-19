@@ -16,25 +16,26 @@ version: '3.1'
 
 services:
   db:
-    image: postgres:13
+    image: postgres:latest
     container_name: postgres_db
     restart: always
     ports:
       - "5444:5432"
     environment:
-      - POSTGRES_USER=test_usr
-      - POSTGRES_PASSWORD=test_pwd
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres_pwd
       - POSTGRES_DB=postgres
     volumes:
       - db-data:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U test_usr -d postgres -h localhost"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -h localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
 
   odoo:
-    image: odoo:15.0
+    image: odoo:17.0
     container_name: odoo_app
     restart: always
     ports:
@@ -49,7 +50,7 @@ services:
       - ./extra-addons:/mnt/extra-addons
     depends_on:
       - db
-    command: ["-i", "base", "-d", "test_db"]
+    command: ["-i", "base", "-d", "project_db"]
 
 volumes:
   db-data:
