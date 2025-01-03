@@ -33,7 +33,7 @@ services:
       - HOST=db
       - PORT=5432
       - USER=test_usr
-      - PASSWORD=test_pwd
+      - PASSWORD=test_usr_pwd
     # env_file: .env
     volumes:
       - web-data:/var/lib/odoo
