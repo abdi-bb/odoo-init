@@ -51,13 +51,19 @@ First run will initialize:
 
 ## 🔧 Working with Addons
 
-* Create a new addon:
+### ➕ Create a new addon
 
 ```bash
-docker compose run --rm odoo_app odoo scaffold my_module /mnt/extra-addons
+docker compose run --rm odoo_app odoo scaffold my_module /mnt/extra-addons/
 ```
 
-* Fix local permissions:
+> **In case you face permission issues**, run it as root inside the container:
+
+```bash
+docker compose run --rm --user root odoo_app odoo scaffold my_module /mnt/extra-addons/
+```
+
+### 🔐 Fix local permissions (optional when editing locally)
 
 ```bash
 sudo chown -R $USER:$USER extra-addons/
