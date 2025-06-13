@@ -1,181 +1,81 @@
-### Development Guidelines for Odoo Inside Docker
+# 🐘 Odoo + PostgreSQL Docker Development Environment
 
-#### 0. Begin
+A minimal, secure, and extensible Docker setup for developing custom Odoo modules.
 
-```sh
-mkdir proj-dir
-cd proj-dir
+---
+
+## 🧱 Project Structure
+
+```text
+project_repo/
+├── docker-compose.yml
+├── .env.example
+├── README.md
+├── LICENSE
+├── init-db.sh           # PostgreSQL bootstrap script
+├── extra-addons/        # Your custom Odoo apps go here
+│   └── .gitkeep
+````
+
+---
+
+## 🚀 Quick Start
+
+1. **Clone the repo**
+
+```bash
+git clone https://github.com/abdi-bb/project_repo
+cd project_repo
 ```
 
-#### 1. Write the `docker-compose.yaml` file
+2. **Set up your environment**
 
-Create a [docker-compose.yaml](docker-compose.yaml) with the following content:
-
-```yaml
-version: '3.1'
-
-services:
-  db:
-    image: postgres:latest
-    container_name: postgres_db
-    restart: always
-    ports:
-      - "5444:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres_pwd
-      - POSTGRES_DB=postgres
-    volumes:
-      - db-data:/var/lib/postgresql/data
-      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -h localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  odoo:
-    image: odoo:17.0
-    container_name: odoo_app
-    restart: always
-    ports:
-      - "8069:8069"
-    environment:
-      - HOST=db
-      - PORT=5432
-      - USER=test_usr
-      - PASSWORD=test_pwd
-    volumes:
-      - web-data:/var/lib/odoo
-      - ./extra-addons:/mnt/extra-addons
-    depends_on:
-      - db
-    command: ["-i", "base", "-d", "project_db"]
-
-volumes:
-  db-data:
-  web-data:
+```bash
+cp .env.example .env
+# Edit .env if needed
 ```
 
-#### 2. Run Docker Compose
+3. **Start the stack**
 
-Build and start the containers with the following command:
-
-```sh
-docker-compose up --build --remove-orphans
-# Because of the mount inside the docker-compose file, this command will create `extra-addons` dir inside `proj-dir`
+```bash
+docker compose up --build
 ```
 
-#### 3. Adjust the Ownership of `extra-addons` Directory
+First run will initialize:
 
-Create a [Makefile](Makefile) with the following content:
+* A PostgreSQL user `test_usr`
+* A database `project_db`
+* An empty `extra-addons/` directory
 
-```makefile
-LOCAL_USER := $(shell id -u):$(shell id -g)
-DOCKER_EXEC := docker exec -it -u root odoo_app
+---
 
-local-chown:
-	sudo chown -R $(LOCAL_USER) extra-addons
+## 🔧 Working with Addons
 
-docker-chown:
-	$(DOCKER_EXEC) chown -R odoo:odoo /mnt/extra-addons
+* Create a new addon:
 
-.DEFAULT_GOAL := help
-
-help:
-	@echo "Usage: make <target>"
-	@echo ""
-	@echo "Targets:"
-	@echo "  local-chown    : Change ownership of 'extra-addons' locally"
-	@echo "  docker-chown   : Change ownership of '/mnt/extra-addons' inside Docker container"
-	@echo "  help           : Show this help message"
+```bash
+docker compose run --rm odoo_app odoo scaffold my_module /mnt/extra-addons
 ```
 
-To work locally, run:
+* Fix local permissions:
 
-```sh
-make local-chown # sudo chown -R 1000:1000 extra-addons
-```
-
-To work inside the container, run:
-
-```sh
-make docker-chown # docker exec -it -u root odoo_app chown -R odoo:odoo /mnt/extra-addons
-```
-
-In case you face an error not having the `odoo` group, run:
-
-```sh
-sudo groupadd odoo
-sudo usermod -aG odoo $USER
-```
-
-#### 4. Confirm Permissions
-
-Check the permissions of the `extra-addons` directory locally and inside the Docker container:
-
-**Local Directory**
-
-```sh
-make local-chown
-
-mkdir extra-addons/app1 # Now should work from local too without permission error
-# Sample output
-❯ ls -l extra-addons
-total 4
-drwxrwxr-x 2 abdi abdi 4096 Jul  2 17:06 app1
-```
-
-**Docker Container Directory**
-
-```sh
-make docker-chown
-```
-
-Then, access the container:
-
-```sh
-docker exec -it odoo_app bash
-```
-
-Inside the container:
-
-```sh
-odoo@container:/$ odoo scaffold app2 /mnt/extra-addons
-odoo@container:/$ ls -l /mnt/extra-addons
-# Sample output
-total 8
-drwxrwxr-x 2 odoo odoo 4096 Jul  2 14:06 app1
-drwxr-xr-x 7 odoo odoo 4096 Jul  2 14:09 app2
-```
-
-**Alternatively, use privileged permissions each time you run the commands:**
-
-**Locally:**
-
-```sh
-sudo mkdir extra-addons/app1
-```
-
-**Inside Container:**
-
-```sh
-docker exec -it -u root odoo_app odoo scaffold app2 /mnt/extra-addons
-```
-
-#### 5. Access the Docker Containers
-
-Once your container is up and running, you can open a bash shell inside the container using:
-
-```sh
-docker exec -it odoo_app bash
-docker exec -it postgres_db bash
-```
-
-#### In Case You Run Into Problems, You Can Have a Fresh Start(Remove container, network and volume)
-
-```sh
-docker-compose down -v
+```bash
+sudo chown -R $USER:$USER extra-addons/
 ```
 
 ---
+
+## 🧹 Clean Everything
+
+```bash
+docker compose down -v
+```
+
+---
+
+## 💡 Tips
+
+* Odoo Web: [http://localhost:8069](http://localhost:8069)
+* PostgreSQL: `localhost:5444`
+* View logs: `docker compose logs -f`
+* Check DB health: `docker compose ps`
